@@ -41,17 +41,38 @@ public class DashboardController {
 
   @FXML
   public void initialize() {
-    // UsernameLabel.setText("@" + user.getUsername());
-    // EmailLabel.setText(user.getEmail());
-    showPage("/com/example/businessproject/Dashboard.fxml");
-    DashboardButton.setOnAction(event -> showPage("/com/example/businessproject/Dashboard.fxml"));
-    InventoryButton.setOnAction(event -> showPage("/com/example/businessproject/Inventory.fxml"));
-    SettingsButton.setOnAction(event -> showPage("/com/example/businessproject/Settings.fxml"));
+    UsernameLabel.setText("@" + user.getUsername());
+    EmailLabel.setText(user.getEmail());
+    showPage("/com/example/businessproject/Dashboard.fxml", "Initialization");
+    DashboardButton.setOnAction(event -> showPage("/com/example/businessproject/Dashboard.fxml", "Dashboard"));
+    InventoryButton.setOnAction(event -> showPage("/com/example/businessproject/Inventory.fxml", "Inventory"));
+    SettingsButton.setOnAction(event -> showPage("/com/example/businessproject/Settings.fxml", "Settings"));
   }
 
-  public void showPage(String fxmlFile) {
+  public void showPage(String fxmlFile, String controllerType) {
     try {
-      Parent page = FXMLLoader.load(getClass().getResource(fxmlFile));
+      // Parent page = FXMLLoader.load(getClass().getResource(fxmlFile));
+
+      FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+      switch (controllerType) {
+        case "Dashboard":
+          DashboardController dashboardController = new DashboardController(user,
+              stage);
+          loader.setController(dashboardController);
+          break;
+        case "Inventory":
+          InventoryController inventoryController = new InventoryController(user,
+              stage);
+          loader.setController(inventoryController);
+          break;
+        case "Settings":
+          System.out.println("This is settings");
+          break;
+        default:
+          break;
+      }
+
+      Parent page = loader.load();
       mainContent.getChildren().clear();
       mainContent.getChildren().add(page);
     } catch (IOException e) {

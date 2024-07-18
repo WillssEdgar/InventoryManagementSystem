@@ -59,6 +59,46 @@ public class InventoryController {
 
   }
 
+  @FXML
+  public void removeCategory() throws SQLException {
+    Category cat = Table.getSelectionModel().getSelectedItem();
+
+    String sql = "DELETE FROM category where name = ?";
+
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setString(1, cat.getName());
+      statement.executeUpdate();
+    }
+
+    updateTable();
+  }
+
+  @FXML
+  public void addCategory() throws SQLException {
+    int company_id = user.getCompany();
+    String name = AddColumnTextField.getText();
+
+    String sql = "INSERT INTO category (name, company_id) VALUES (?,?)";
+
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setString(1, name);
+      statement.setInt(2, company_id);
+      statement.executeUpdate();
+    }
+    AddColumnTextField.clear();
+    updateTable();
+
+  }
+
+  private void updateTable() {
+    try {
+      List<Category> categories = getCategories();
+      Table.getItems().setAll(categories); // Replace all items in the table
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
   public List<Category> getCategories() throws SQLException {
     int userInt = user.getCompany();
     String sql = "SELECT * FROM category where company_id = ?";

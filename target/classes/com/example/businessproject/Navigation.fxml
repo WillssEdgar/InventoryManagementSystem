@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
@@ -8,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/22" >
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
     <left>
-        <VBox prefHeight="600.0" prefWidth="173.0" style="-fx-background-color: rgb(83,104,120);">
+        <VBox minWidth="200.0" prefHeight="600.0" prefWidth="190.0" style="-fx-background-color: rgb(83,104,120);">
             <children>
                 <Label fx:id="UsernameLabel" prefHeight="19.0" prefWidth="154.0" text="\@" textAlignment="CENTER" textFill="WHITE">
                     <VBox.margin>
@@ -28,9 +29,18 @@
                         <Insets left="22.0" />
                     </VBox.margin>
                 </Label>
-                <Button fx:id="DashboardButton" prefWidth="175.0" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Dashboard" />
-                <Button fx:id="InventoryButton" prefWidth="175.0" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Inventory" />
-                <Button fx:id="SettingsButton" prefWidth="175.0" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Settings" />
+                <Button fx:id="DashboardButton" prefWidth="175.0" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Dashboard">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+                <Button fx:id="InventoryButton" prefWidth="175.0" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Inventory">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+                <Button fx:id="SettingsButton" prefWidth="175.0" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Settings">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
             </children>
         </VBox>
     </left>
@@ -38,4 +48,3 @@
         <StackPane fx:id="mainContent" />
     </center>
 </BorderPane>
-
