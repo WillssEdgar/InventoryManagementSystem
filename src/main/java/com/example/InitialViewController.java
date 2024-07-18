@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -100,8 +101,10 @@ public class InitialViewController {
    * Opens the SignUp window
    */
   private void openDashboard(User user) throws IOException {
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/businessproject/Dashboard.fxml"));
+    // FXMLLoader loader = new
+    // FXMLLoader(getClass().getResource("/com/example/businessproject/Dashboard.fxml"));
 
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/businessproject/Navigation.fxml"));
     DashboardController controller = new DashboardController(user, stage);
     loader.setController(controller);
 
@@ -114,4 +117,5 @@ public class InitialViewController {
     stage.setTitle("Business Storage Manager - Dashboard");
     stage.show();
   }
+
 }

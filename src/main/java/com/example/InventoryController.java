@@ -1,5 +1,9 @@
 package com.example;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 /**
@@ -26,6 +31,8 @@ public class InventoryController {
     this.stage = stage;
   }
 
+  Connection connection = GlobalState.getInstance().getConnection();
+
   @FXML
   private TableView<Category> Table;
   @FXML
@@ -39,16 +46,35 @@ public class InventoryController {
 
   @FXML
   public void initialize() {
-    Category cat1 = new Category(1, "Knife");
-    Category cat2 = new Category(2, "Gun");
 
-    List<Category> strlst = new ArrayList<>();
-    strlst.add(cat1);
-    strlst.add(cat2);
+    CategoriesColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-    for (int i = 0; i < strlst.size(); i++) {
-      Table.getItems().add(strlst.get(i));
+    try {
+      List<Category> strlst = getCategories();
+
+      Table.getItems().addAll(strlst);
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
 
+  }
+
+  public List<Category> getCategories() throws SQLException {
+    int userInt = user.getCompany();
+    String sql = "SELECT * FROM category where company_id = ?";
+    List<Category> lst = new ArrayList<>();
+
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setInt(1, userInt);
+      try (ResultSet resultSet = statement.executeQuery()) {
+        while (resultSet.next()) {
+          int id = resultSet.getInt("id");
+          String name = resultSet.getString("name");
+
+          lst.add(new Category(id, name));
+        }
+      }
+    }
+    return lst;
   }
 }
