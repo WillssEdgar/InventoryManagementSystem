@@ -26,7 +26,7 @@ public class Product {
     return name;
   }
 
-  public float getQuantity() {
+  public int getQuantity() {
     return quantity;
   }
 

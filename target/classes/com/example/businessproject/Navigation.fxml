@@ -35,21 +35,30 @@
                </cursor>
                <font>
                   <Font size="18.0" />
-               </font></Button>
+               </font>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin></Button>
                 <Button fx:id="InventoryButton" prefHeight="27.0" prefWidth="197.0" style="-fx-background-color: transparent; -fx-text-fill: white;" styleClass="menu-button" text="Inventory">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
                <font>
                   <Font size="18.0" />
-               </font></Button>
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></Button>
                 <Button fx:id="SettingsButton" prefHeight="27.0" prefWidth="194.0" style="-fx-background-color: transparent; -fx-text-fill: white;" styleClass="menu-button" stylesheets="@Navigation.css" text="Settings">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
                <font>
                   <Font size="18.0" />
-               </font></Button>
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></Button>
             </children>
         </VBox>
     </left>

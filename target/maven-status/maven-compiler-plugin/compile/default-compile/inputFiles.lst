@@ -1,10 +1,12 @@
 /home/willssedgar/Developer/Java/BusinessStorage/src/main/java/com/example/SignUpController.java
 /home/willssedgar/Developer/Java/BusinessStorage/src/main/java/com/example/InitialViewController.java
 /home/willssedgar/Developer/Java/BusinessStorage/src/main/java/com/example/DashboardController.java
+/home/willssedgar/Developer/Java/BusinessStorage/src/main/java/com/example/models/TransactionType.java
 /home/willssedgar/Developer/Java/BusinessStorage/src/main/java/com/example/GlobalState.java
 /home/willssedgar/Developer/Java/BusinessStorage/src/main/java/com/example/models/Company.java
 /home/willssedgar/Developer/Java/BusinessStorage/src/main/java/com/example/models/Product.java
 /home/willssedgar/Developer/Java/BusinessStorage/src/main/java/com/example/NavigationController.java
+/home/willssedgar/Developer/Java/BusinessStorage/src/main/java/com/example/models/Transaction.java
 /home/willssedgar/Developer/Java/BusinessStorage/src/main/java/com/example/models/Category.java
 /home/willssedgar/Developer/Java/BusinessStorage/src/main/java/com/example/models/User.java
 /home/willssedgar/Developer/Java/BusinessStorage/src/main/java/com/example/InventoryController.java

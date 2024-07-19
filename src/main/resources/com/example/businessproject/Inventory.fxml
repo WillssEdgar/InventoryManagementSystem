@@ -45,7 +45,7 @@
    </rowConstraints>
    <children>
       <HBox prefHeight="134.0" prefWidth="308.0" GridPane.columnIndex="7" GridPane.rowIndex="2" />
-      <TableView fx:id="Table" onMouseClicked="#fillTableTwo" prefHeight="397.0" prefWidth="279.0" GridPane.columnSpan="6" GridPane.rowSpan="9">
+      <TableView fx:id="Table" onMouseClicked="#fillProductTable" prefHeight="397.0" prefWidth="279.0" GridPane.columnSpan="6" GridPane.rowSpan="9">
          <columns>
             <TableColumn fx:id="CategoriesColumn" prefWidth="256.0" text="Categories" />
          </columns>
@@ -59,7 +59,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <TableView fx:id="Table2" prefHeight="392.0" prefWidth="154.0" GridPane.columnIndex="6" GridPane.columnSpan="7" GridPane.rowSpan="9">
+      <TableView fx:id="Table2" onMouseClicked="#fillProductName" prefHeight="392.0" prefWidth="154.0" GridPane.columnIndex="6" GridPane.columnSpan="7" GridPane.rowSpan="9">
         <columns>
           <TableColumn fx:id="Products" prefWidth="101.0" text="Products" />
             <TableColumn fx:id="Quantity" prefWidth="102.0" text="Quantity" />
@@ -70,5 +70,8 @@
       <TextField fx:id="ProductQuantity" layoutX="323.0" layoutY="375.0" promptText="Quantity" GridPane.columnIndex="9" GridPane.rowIndex="9" />
       <TextField fx:id="ProductPrice" layoutX="460.0" layoutY="375.0" promptText="Price" GridPane.columnIndex="11" GridPane.rowIndex="9" />
       <Button mnemonicParsing="false" onAction="#addProduct" text="Add" GridPane.columnIndex="12" GridPane.rowIndex="9" />
+      <Button mnemonicParsing="false" onAction="#removeProduct" text="Remove" GridPane.columnIndex="12" GridPane.rowIndex="10" />
+      <TextField fx:id="RemoveProductName" layoutX="267.0" layoutY="375.0" promptText="Product Name" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="10" />
+      <TextField fx:id="RemoveProductQuantity" layoutX="393.0" layoutY="375.0" promptText="Quantity" GridPane.columnIndex="9" GridPane.rowIndex="10" />
    </children>
 </GridPane>

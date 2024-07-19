@@ -65,42 +65,60 @@ public class DashboardController {
     }
   }
 
-  public List<Integer> getCompanyCategories(int company_id) throws SQLException {
-    String sql = "SELECT id FROM category WHERE company_id = ?";
-
-    List<Integer> lst = new ArrayList<>();
+  // public List<Integer> getCompanyCategories(int company_id) throws SQLException
+  // {
+  // String sql = "SELECT id FROM category WHERE company_id = ?";
+  //
+  // List<Integer> lst = new ArrayList<>();
+  //
+  // try (PreparedStatement statement = connection.prepareStatement(sql)) {
+  // statement.setInt(1, company_id);
+  // try (ResultSet resultSet = statement.executeQuery()) {
+  // while (resultSet.next()) {
+  // lst.add(resultSet.getInt("id"));
+  // }
+  // }
+  // }
+  // return lst;
+  //
+  // }
+  //
+  // public float getTotalInventory(int company_id) throws SQLException {
+  // String sql = "SELECT SUM(price) as value FROM products WHERE category_id =
+  // ?";
+  //
+  // List<Integer> lst = getCompanyCategories(company_id);
+  // float sum = 0;
+  //
+  // for (int i = 0; i < lst.size(); i++) {
+  // try (PreparedStatement statement = connection.prepareStatement(sql)) {
+  // statement.setInt(1, lst.get(i));
+  // try (ResultSet resultSet = statement.executeQuery()) {
+  // while (resultSet.next()) {
+  // float value = resultSet.getFloat("value");
+  // sum += value;
+  // }
+  // }
+  // }
+  // }
+  //
+  // return sum;
+  // }
+  public float getTotalInventory(int company_id) throws SQLException {
+    String sql = "SELECT SUM(p.price * p.quantity) as total_value " +
+        "FROM products p " +
+        "JOIN category c ON p.category_id = c.id " +
+        "WHERE c.company_id = ?";
 
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
       statement.setInt(1, company_id);
       try (ResultSet resultSet = statement.executeQuery()) {
-        while (resultSet.next()) {
-          lst.add(resultSet.getInt("id"));
+        if (resultSet.next()) {
+          return resultSet.getFloat("total_value");
         }
       }
     }
-    return lst;
-
-  }
-
-  public float getTotalInventory(int company_id) throws SQLException {
-    String sql = "SELECT SUM(price) as value FROM products WHERE category_id = ?";
-
-    List<Integer> lst = getCompanyCategories(company_id);
-    float sum = 0;
-
-    for (int i = 0; i < lst.size(); i++) {
-      try (PreparedStatement statement = connection.prepareStatement(sql)) {
-        statement.setInt(1, lst.get(i));
-        try (ResultSet resultSet = statement.executeQuery()) {
-          while (resultSet.next()) {
-            float value = resultSet.getFloat("value");
-            sum += value;
-          }
-        }
-      }
-    }
-
-    return sum;
+    return 0;
   }
 
 }

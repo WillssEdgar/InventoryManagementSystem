@@ -38,7 +38,7 @@
     <RowConstraints maxHeight="109.0" minHeight="10.0" prefHeight="109.0" vgrow="SOMETIMES" />
     </rowConstraints>
   <children>
-    <Pane prefHeight="191.0" prefWidth="465.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: #d1d5db; -fx-border-radius: 20;" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.rowSpan="6">
+    <Pane prefHeight="191.0" prefWidth="465.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: #d1d5db; -fx-border-radius: 20;" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.rowIndex="1" GridPane.rowSpan="6">
       <GridPane.margin>
         <Insets left="5.0" />
         </GridPane.margin>

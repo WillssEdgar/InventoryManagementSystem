@@ -3,11 +3,13 @@ com/example/models/User.class
 com/example/App.class
 com/example/models/Company.class
 com/example/InitialViewController.class
+com/example/models/Transaction.class
 com/example/authentication/Authentication.class
 com/example/InventoryController.class
 com/example/GlobalState.class
 com/example/SignUpController.class
 com/example/database/DatabaseConnection.class
 com/example/models/Category.class
+com/example/models/TransactionType.class
 com/example/NavigationController.class
 com/example/models/Product.class

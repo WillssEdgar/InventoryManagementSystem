@@ -11,6 +11,8 @@ import java.util.List;
 
 import com.example.models.Category;
 import com.example.models.Product;
+import com.example.models.Transaction;
+import com.example.models.TransactionType;
 import com.example.models.User;
 
 import javafx.fxml.FXML;
@@ -63,15 +65,20 @@ public class InventoryController {
   private Button AddColumnButton;
 
   @FXML
+  private TextField RemoveProductName;
+  @FXML
+  private TextField RemoveProductQuantity;
+
+  @FXML
   public void initialize() {
 
     CategoriesColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
     Products.setCellValueFactory(new PropertyValueFactory<>("name"));
     Quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
     Price.setCellValueFactory(new PropertyValueFactory<>("price"));
+
     try {
       List<Category> strlst = getCategories();
-
       Table.getItems().addAll(strlst);
     } catch (SQLException e) {
       e.printStackTrace();
@@ -79,28 +86,78 @@ public class InventoryController {
 
   }
 
-  @FXML
-  public void removeCategory() throws SQLException {
-    Category cat = Table.getSelectionModel().getSelectedItem();
+  public void addTransaction(Product product, TransactionType type, int amount) throws SQLException {
 
-    String sql = "DELETE FROM category where name = ?";
+    String sql = "INSERT INTO transactions (name, type, amount, company_id) VALUES (?,?,?,?)";
 
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
-      statement.setString(1, cat.getName());
+      statement.setString(1, product.getName());
+      statement.setString(2, type.name());
+      statement.setInt(3, amount);
+      statement.setInt(4, user.getCompany());
       statement.executeUpdate();
     }
+    updateProductTable();
 
-    updateTable();
   }
 
   @FXML
-  public void fillTableTwo() throws SQLException {
-    Category cat = Table.getSelectionModel().getSelectedItem();
-    String sql = "SELECT * FROM products where category_id = ?";
-    List<Product> lst = new ArrayList<>();
+  public void removeCategory() throws SQLException {
+    Category category = Table.getSelectionModel().getSelectedItem();
+    if (category == null)
+      return;
+
+    String sql = "DELETE FROM category WHERE name = ?";
 
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
-      statement.setInt(1, cat.getCompany());
+      statement.setString(1, category.getName());
+      statement.executeUpdate();
+    }
+
+    updateCategoryTable();
+  }
+
+  @FXML
+  public void removeProduct() throws SQLException {
+    Product product = Table2.getSelectionModel().getSelectedItem();
+    if (product == null)
+      return;
+
+    int amountToRemove = Integer.valueOf(RemoveProductQuantity.getText());
+
+    if (product.getQuantity() <= amountToRemove) {
+      String sql = "DELETE FROM products WHERE name = ?";
+      try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        statement.setString(1, product.getName());
+        statement.executeUpdate();
+      }
+
+    } else {
+      String sql = "UPDATE products SET quantity = quantity - ? WHERE name = ?";
+      try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        statement.setInt(1, amountToRemove); // Set the quantity to subtract
+        statement.setString(2, product.getName()); // Set the product ID
+        statement.executeUpdate();
+
+      }
+    }
+    RemoveProductName.clear();
+    RemoveProductQuantity.clear();
+    updateProductTable();
+    addTransaction(product, TransactionType.SOLD, amountToRemove);
+  }
+
+  @FXML
+  public void fillProductTable() throws SQLException {
+    Category category = Table.getSelectionModel().getSelectedItem();
+    if (category == null)
+      return;
+
+    String sql = "SELECT * FROM products where category_id = ?";
+    List<Product> products = new ArrayList<>();
+
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setInt(1, category.getId());
       try (ResultSet resultSet = statement.executeQuery()) {
         while (resultSet.next()) {
           int id = resultSet.getInt("id");
@@ -109,20 +166,22 @@ public class InventoryController {
           Float price = resultSet.getFloat("price");
           int category_id = resultSet.getInt("category_id");
 
-          lst.add(new Product(id, name, quantity, price, category_id));
+          products.add(new Product(id, name, quantity, price, category_id));
 
         }
       }
     }
-    System.out.println("List in fillTableTwo(): " + lst.toString());
-    Table2.getItems().addAll(lst);
+    Table2.getItems().addAll(products);
 
   }
 
   @FXML
   public void addProduct() throws SQLException {
 
-    Category cat = Table.getSelectionModel().getSelectedItem();
+    Category category = Table.getSelectionModel().getSelectedItem();
+    if (category == null)
+      return;
+
     String productName = ProductName.getText();
     int quantity = Integer.valueOf(ProductQuantity.getText());
     String price = ProductPrice.getText();
@@ -136,13 +195,22 @@ public class InventoryController {
       statement.setString(1, productName);
       statement.setInt(2, quantity);
       statement.setFloat(3, float_price);
-      statement.setInt(4, cat.getId());
+      statement.setInt(4, category.getId());
       statement.executeUpdate();
     }
     ProductName.clear();
     ProductQuantity.clear();
     ProductPrice.clear();
     updateProductTable();
+    addTransaction(new Product(0, productName, quantity, float_price, category.getId()), TransactionType.ADD, quantity);
+  }
+
+  @FXML
+  public void fillProductName() {
+    Product product = Table2.getSelectionModel().getSelectedItem();
+    if (product != null) {
+      RemoveProductName.setText(product.getName());
+    }
 
   }
 
@@ -159,11 +227,11 @@ public class InventoryController {
       statement.executeUpdate();
     }
     AddColumnTextField.clear();
-    updateTable();
+    updateCategoryTable();
 
   }
 
-  private void updateTable() {
+  private void updateCategoryTable() {
     try {
       List<Category> categories = getCategories();
       Table.getItems().setAll(categories); // Replace all items in the table
@@ -174,20 +242,23 @@ public class InventoryController {
 
   private void updateProductTable() {
     try {
-      List<Product> categories = getProducts();
-      Table2.getItems().setAll(categories); // Replace all items in the table
+      List<Product> products = getProducts();
+      Table2.getItems().setAll(products); // Replace all items in the table
     } catch (SQLException e) {
       e.printStackTrace();
     }
   }
 
   public List<Product> getProducts() throws SQLException {
-    Category cat = Table.getSelectionModel().getSelectedItem();
+    Category category = Table.getSelectionModel().getSelectedItem();
+    if (category == null)
+      return new ArrayList<>();
+
     String sql = "SELECT * FROM products where category_id = ?";
-    List<Product> lst = new ArrayList<>();
+    List<Product> products = new ArrayList<>();
 
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
-      statement.setInt(1, cat.getId());
+      statement.setInt(1, category.getId());
       try (ResultSet resultSet = statement.executeQuery()) {
         while (resultSet.next()) {
           int id = resultSet.getInt("id");
@@ -196,30 +267,30 @@ public class InventoryController {
           float price = resultSet.getFloat("price");
           int category_id = resultSet.getInt("category_id");
 
-          lst.add(new Product(id, name, quantity, price, category_id));
+          products.add(new Product(id, name, quantity, price, category_id));
         }
       }
     }
-    return lst;
+    return products;
   }
 
   public List<Category> getCategories() throws SQLException {
-    int userInt = user.getCompany();
+    int companyId = user.getCompany();
     String sql = "SELECT * FROM category where company_id = ?";
-    List<Category> lst = new ArrayList<>();
+    List<Category> categories = new ArrayList<>();
 
     try (PreparedStatement statement = connection.prepareStatement(sql)) {
-      statement.setInt(1, userInt);
+      statement.setInt(1, companyId);
       try (ResultSet resultSet = statement.executeQuery()) {
         while (resultSet.next()) {
           int id = resultSet.getInt("id");
           String name = resultSet.getString("name");
           int company_id = resultSet.getInt("company_id");
 
-          lst.add(new Category(id, name, company_id));
+          categories.add(new Category(id, name, company_id));
         }
       }
     }
-    return lst;
+    return categories;
   }
 }
