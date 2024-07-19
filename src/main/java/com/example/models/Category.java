@@ -6,10 +6,12 @@ package com.example.models;
 public class Category {
   private int id;
   private String name;
+  private int company_id;
 
-  public Category(int id, String name) {
+  public Category(int id, String name, int company_id) {
     this.id = id;
     this.name = name;
+    this.company_id = company_id;
   }
 
   public int getId() {
@@ -18,6 +20,10 @@ public class Category {
 
   public String getName() {
     return name;
+  }
+
+  public int getCompany() {
+    return company_id;
   }
 
   public void setName(String name) {

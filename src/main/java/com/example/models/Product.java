@@ -8,12 +8,14 @@ public class Product {
   private String name;
   private int quantity;
   private float price;
+  private int category_id;
 
-  public Product(int id, String name, int quantity, float price) {
+  public Product(int id, String name, int quantity, float price, int category_id) {
     this.id = id;
     this.name = name;
     this.quantity = quantity;
     this.price = price;
+    this.category_id = category_id;
   }
 
   public int getId() {
@@ -30,6 +32,10 @@ public class Product {
 
   public float getPrice() {
     return price;
+  }
+
+  public int getCategory() {
+    return category_id;
   }
 
   public void setName(String name) {

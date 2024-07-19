@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.models.Category;
+import com.example.models.Product;
 import com.example.models.User;
 
 import javafx.fxml.FXML;
@@ -35,6 +36,11 @@ public class InventoryController {
 
   @FXML
   private TableView<Category> Table;
+  @FXML
+  private TableView<Product> Table2;
+  @FXML
+  private TableColumn<Product, String> Products;
+
   @FXML
   private TableColumn<Category, String> CategoriesColumn;
 
@@ -74,6 +80,30 @@ public class InventoryController {
   }
 
   @FXML
+  public void fillTableTwo() throws SQLException {
+    Category cat = Table.getSelectionModel().getSelectedItem();
+    String sql = "SELECT * FROM products where category_id = ?";
+    List<Product> lst = new ArrayList<>();
+
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setInt(1, cat.getCompany());
+      try (ResultSet resultSet = statement.executeQuery()) {
+        while (resultSet.next()) {
+          int id = resultSet.getInt("id");
+          String name = resultSet.getString("name");
+          int quantity = resultSet.getInt("quantity");
+          Float price = resultSet.getFloat("price");
+          int category_id = resultSet.getInt("category_id");
+
+          lst.add(new Product(id, name, quantity, price, category_id));
+        }
+      }
+    }
+    Table2.getItems().addAll(lst);
+
+  }
+
+  @FXML
   public void addCategory() throws SQLException {
     int company_id = user.getCompany();
     String name = AddColumnTextField.getText();
@@ -110,8 +140,9 @@ public class InventoryController {
         while (resultSet.next()) {
           int id = resultSet.getInt("id");
           String name = resultSet.getString("name");
+          int company_id = resultSet.getInt("company_id");
 
-          lst.add(new Category(id, name));
+          lst.add(new Category(id, name, company_id));
         }
       }
     }
