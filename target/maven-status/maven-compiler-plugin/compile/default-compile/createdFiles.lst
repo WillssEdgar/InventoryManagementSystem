@@ -9,4 +9,5 @@ com/example/GlobalState.class
 com/example/SignUpController.class
 com/example/database/DatabaseConnection.class
 com/example/models/Category.class
+com/example/NavigationController.class
 com/example/models/Product.class

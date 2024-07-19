@@ -29,18 +29,27 @@
                         <Insets left="22.0" />
                     </VBox.margin>
                 </Label>
-                <Button fx:id="DashboardButton" prefWidth="175.0" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Dashboard">
+                <Button fx:id="DashboardButton" prefHeight="27.0" prefWidth="196.0" style="-fx-background-color: transparent; -fx-text-fill: white;" styleClass="menu-button" text="Dashboard">
                <cursor>
                   <Cursor fx:constant="HAND" />
-               </cursor></Button>
-                <Button fx:id="InventoryButton" prefWidth="175.0" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Inventory">
+               </cursor>
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
+                <Button fx:id="InventoryButton" prefHeight="27.0" prefWidth="197.0" style="-fx-background-color: transparent; -fx-text-fill: white;" styleClass="menu-button" text="Inventory">
                <cursor>
                   <Cursor fx:constant="HAND" />
-               </cursor></Button>
-                <Button fx:id="SettingsButton" prefWidth="175.0" style="-fx-background-color: transparent; -fx-text-fill: white;" text="Settings">
+               </cursor>
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
+                <Button fx:id="SettingsButton" prefHeight="27.0" prefWidth="194.0" style="-fx-background-color: transparent; -fx-text-fill: white;" styleClass="menu-button" stylesheets="@Navigation.css" text="Settings">
                <cursor>
                   <Cursor fx:constant="HAND" />
-               </cursor></Button>
+               </cursor>
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
             </children>
         </VBox>
     </left>

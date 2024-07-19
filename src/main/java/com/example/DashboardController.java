@@ -2,8 +2,16 @@
 package com.example;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.example.models.Category;
 import com.example.models.User;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,11 +23,14 @@ import javafx.stage.Stage;
 public class DashboardController {
   private User user;
   private Stage stage;
+  private List<Button> buttons;
 
   public DashboardController(User user, Stage stage) {
     this.user = user;
     this.stage = stage;
   }
+
+  Connection connection = GlobalState.getInstance().getConnection();
 
   @FXML
   private StackPane mainContent;
@@ -40,43 +51,56 @@ public class DashboardController {
   private Button SettingsButton;
 
   @FXML
+  private Label TotalInventoryLabel;
+
+  @FXML
   public void initialize() {
-    UsernameLabel.setText("@" + user.getUsername());
-    EmailLabel.setText(user.getEmail());
-    showPage("/com/example/businessproject/Dashboard.fxml", "Initialization");
-    DashboardButton.setOnAction(event -> showPage("/com/example/businessproject/Dashboard.fxml", "Dashboard"));
-    InventoryButton.setOnAction(event -> showPage("/com/example/businessproject/Inventory.fxml", "Inventory"));
-    SettingsButton.setOnAction(event -> showPage("/com/example/businessproject/Settings.fxml", "Settings"));
-  }
-
-  public void showPage(String fxmlFile, String controllerType) {
     try {
-      // Parent page = FXMLLoader.load(getClass().getResource(fxmlFile));
 
-      FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-      switch (controllerType) {
-        case "Dashboard":
-          DashboardController dashboardController = new DashboardController(user,
-              stage);
-          loader.setController(dashboardController);
-          break;
-        case "Inventory":
-          InventoryController inventoryController = new InventoryController(user,
-              stage);
-          loader.setController(inventoryController);
-          break;
-        case "Settings":
-          System.out.println("This is settings");
-          break;
-        default:
-          break;
-      }
+      float value = getTotalInventory(user.getCompany());
+      TotalInventoryLabel.setText("$" + String.valueOf(value));
 
-      Parent page = loader.load();
-      mainContent.getChildren().clear();
-      mainContent.getChildren().add(page);
-    } catch (IOException e) {
+    } catch (SQLException e) {
       e.printStackTrace();
     }
   }
+
+  public List<Integer> getCompanyCategories(int company_id) throws SQLException {
+    String sql = "SELECT id FROM category WHERE company_id = ?";
+
+    List<Integer> lst = new ArrayList<>();
+
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setInt(1, company_id);
+      try (ResultSet resultSet = statement.executeQuery()) {
+        while (resultSet.next()) {
+          lst.add(resultSet.getInt("id"));
+        }
+      }
+    }
+    return lst;
+
+  }
+
+  public float getTotalInventory(int company_id) throws SQLException {
+    String sql = "SELECT SUM(price) as value FROM products WHERE category_id = ?";
+
+    List<Integer> lst = getCompanyCategories(company_id);
+    float sum = 0;
+
+    for (int i = 0; i < lst.size(); i++) {
+      try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        statement.setInt(1, lst.get(i));
+        try (ResultSet resultSet = statement.executeQuery()) {
+          while (resultSet.next()) {
+            float value = resultSet.getFloat("value");
+            sum += value;
+          }
+        }
+      }
+    }
+
+    return sum;
+  }
+
 }

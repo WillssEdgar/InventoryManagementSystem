@@ -105,7 +105,7 @@ public class InitialViewController {
     // FXMLLoader(getClass().getResource("/com/example/businessproject/Dashboard.fxml"));
 
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/businessproject/Navigation.fxml"));
-    DashboardController controller = new DashboardController(user, stage);
+    NavigationController controller = new NavigationController(user, stage);
     loader.setController(controller);
 
     // Load the FXML file

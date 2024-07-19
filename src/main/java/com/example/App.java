@@ -37,6 +37,7 @@ public class App extends Application {
 
     // Create and set the scene
     Scene scene = new Scene(root);
+    scene.getStylesheets().add(getClass().getResource("/com/example/businessproject/Navigation.css").toExternalForm());
     stage.setScene(scene);
     stage.setTitle("Business Storage Manager");
     stage.setWidth(600);

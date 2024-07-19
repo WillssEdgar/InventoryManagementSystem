@@ -1,5 +1,7 @@
 package com.example;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,12 +42,22 @@ public class InventoryController {
   private TableView<Product> Table2;
   @FXML
   private TableColumn<Product, String> Products;
+  @FXML
+  private TableColumn<Product, Integer> Quantity;
+  @FXML
+  private TableColumn<Product, Float> Price;
 
   @FXML
   private TableColumn<Category, String> CategoriesColumn;
 
   @FXML
   private TextField AddColumnTextField;
+  @FXML
+  private TextField ProductName;
+  @FXML
+  private TextField ProductQuantity;
+  @FXML
+  private TextField ProductPrice;
 
   @FXML
   private Button AddColumnButton;
@@ -54,7 +66,9 @@ public class InventoryController {
   public void initialize() {
 
     CategoriesColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-
+    Products.setCellValueFactory(new PropertyValueFactory<>("name"));
+    Quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+    Price.setCellValueFactory(new PropertyValueFactory<>("price"));
     try {
       List<Category> strlst = getCategories();
 
@@ -96,10 +110,39 @@ public class InventoryController {
           int category_id = resultSet.getInt("category_id");
 
           lst.add(new Product(id, name, quantity, price, category_id));
+
         }
       }
     }
+    System.out.println("List in fillTableTwo(): " + lst.toString());
     Table2.getItems().addAll(lst);
+
+  }
+
+  @FXML
+  public void addProduct() throws SQLException {
+
+    Category cat = Table.getSelectionModel().getSelectedItem();
+    String productName = ProductName.getText();
+    int quantity = Integer.valueOf(ProductQuantity.getText());
+    String price = ProductPrice.getText();
+    BigDecimal bigDecimal = new BigDecimal(price);
+    bigDecimal = bigDecimal.setScale(2, RoundingMode.HALF_UP);
+    float float_price = bigDecimal.floatValue();
+
+    String sql = "INSERT INTO products (name, quantity, price, category_id) VALUES (?,?,?,?)";
+
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setString(1, productName);
+      statement.setInt(2, quantity);
+      statement.setFloat(3, float_price);
+      statement.setInt(4, cat.getId());
+      statement.executeUpdate();
+    }
+    ProductName.clear();
+    ProductQuantity.clear();
+    ProductPrice.clear();
+    updateProductTable();
 
   }
 
@@ -127,6 +170,37 @@ public class InventoryController {
     } catch (SQLException e) {
       e.printStackTrace();
     }
+  }
+
+  private void updateProductTable() {
+    try {
+      List<Product> categories = getProducts();
+      Table2.getItems().setAll(categories); // Replace all items in the table
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public List<Product> getProducts() throws SQLException {
+    Category cat = Table.getSelectionModel().getSelectedItem();
+    String sql = "SELECT * FROM products where category_id = ?";
+    List<Product> lst = new ArrayList<>();
+
+    try (PreparedStatement statement = connection.prepareStatement(sql)) {
+      statement.setInt(1, cat.getId());
+      try (ResultSet resultSet = statement.executeQuery()) {
+        while (resultSet.next()) {
+          int id = resultSet.getInt("id");
+          String name = resultSet.getString("name");
+          int quantity = resultSet.getInt("quantity");
+          float price = resultSet.getFloat("price");
+          int category_id = resultSet.getInt("category_id");
+
+          lst.add(new Product(id, name, quantity, price, category_id));
+        }
+      }
+    }
+    return lst;
   }
 
   public List<Category> getCategories() throws SQLException {
