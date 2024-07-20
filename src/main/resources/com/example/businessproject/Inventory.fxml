@@ -73,5 +73,6 @@
       <Button mnemonicParsing="false" onAction="#removeProduct" text="Remove" GridPane.columnIndex="12" GridPane.rowIndex="10" />
       <TextField fx:id="RemoveProductName" layoutX="267.0" layoutY="375.0" promptText="Product Name" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="10" />
       <TextField fx:id="RemoveProductQuantity" layoutX="393.0" layoutY="375.0" promptText="Quantity" GridPane.columnIndex="9" GridPane.rowIndex="10" />
+      <TextField fx:id="RemoveCategoryTextField" layoutX="10.0" layoutY="375.0" promptText="Category Name" GridPane.columnSpan="3" GridPane.rowIndex="10" />
    </children>
 </GridPane>

@@ -2,6 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
@@ -15,13 +17,12 @@
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="216.0" minWidth="0.0" prefWidth="33.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="197.0" minWidth="0.0" prefWidth="75.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="325.0" minWidth="10.0" prefWidth="64.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="325.0" minWidth="10.0" prefWidth="95.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="242.0" minWidth="0.0" prefWidth="42.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="152.0" minWidth="10.0" prefWidth="36.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="152.0" minWidth="10.0" prefWidth="75.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="325.0" minWidth="10.0" prefWidth="66.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="242.0" minWidth="0.0" prefWidth="71.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="152.0" minWidth="10.0" prefWidth="101.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="152.0" minWidth="10.0" prefWidth="81.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="138.0" minWidth="10.0" prefWidth="74.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="10.0" prefWidth="115.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="87.0" minWidth="10.0" prefWidth="32.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="87.0" minWidth="10.0" prefWidth="35.0" />
     </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
@@ -30,8 +31,8 @@
     <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="86.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="107.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="207.0" minHeight="10.0" prefHeight="78.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="107.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="207.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="252.0" minHeight="10.0" prefHeight="88.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="218.0" minHeight="0.0" prefHeight="113.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="156.0" minHeight="10.0" prefHeight="81.0" vgrow="SOMETIMES" />
@@ -40,21 +41,68 @@
   <children>
     <Pane prefHeight="191.0" prefWidth="465.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: #d1d5db; -fx-border-radius: 20;" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.rowIndex="1" GridPane.rowSpan="6">
       <GridPane.margin>
-        <Insets left="5.0" />
+        <Insets left="5.0" right="10.0" />
         </GridPane.margin>
       <children>
-        <Text layoutX="4.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Inventory Value" textAlignment="CENTER" wrappingWidth="178.205078125" />
-            <Label fx:id="TotalInventoryLabel" layoutX="68.0" layoutY="47.0" text="Label">
+        <Text layoutX="8.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Inventory Value:" textAlignment="CENTER" wrappingWidth="190.205078125">
                <font>
-                  <Font size="20.0" />
+                  <Font size="12.0" />
+               </font></Text>
+            <Label fx:id="TotalInventoryLabel" layoutX="202.0" layoutY="70.0" text="Label">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+            <Text layoutX="24.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Key Metrics">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text layoutX="8.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Company Name: " textAlignment="CENTER" wrappingWidth="190.205078125">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Text>
+            <Label fx:id="CompanyNameLabel" layoutX="193.0" layoutY="54.0" text="Label">
+               <font>
+                  <Font size="12.0" />
                </font>
             </Label>
         </children>
       </Pane>
-    <Pane layoutX="234.0" layoutY="40.0" prefHeight="218.0" prefWidth="237.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: #d1d5db; -fx-border-radius: 20;" GridPane.columnIndex="7" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.rowSpan="6">
+    <Pane layoutX="234.0" layoutY="40.0" prefHeight="218.0" prefWidth="237.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: #d1d5db; -fx-border-radius: 20;" GridPane.columnIndex="2" GridPane.columnSpan="7" GridPane.rowIndex="8" GridPane.rowSpan="3">
       <children>
-        <Text layoutX="1.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Low Stock Products" textAlignment="CENTER" wrappingWidth="178.205078125" />
+        <Text layoutX="23.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Low Stock Products" textAlignment="CENTER" wrappingWidth="178.205078125">
+               <font>
+                  <Font size="16.0" />
+               </font></Text>
+            <TableView fx:id="LowStockProductsTable" layoutX="76.0" layoutY="44.0" prefHeight="200.0" prefWidth="381.0" style="-fx-background-color: white;">
+               <columns>
+                  <TableColumn fx:id="LowStockProductColumn" prefWidth="174.0" text="Product" />
+                  <TableColumn fx:id="LowStockQuantityColumn" prefWidth="108.0" text="Quantity" />
+                  <TableColumn fx:id="LowStockPriceColumn" prefWidth="98.0" text="Price" />
+               </columns>
+            </TableView>
         </children>
+      </Pane>
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: #d1d5db; -fx-border-radius: 20;" GridPane.columnIndex="6" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.rowSpan="6">
+         <children>
+            <Text layoutX="22.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Transactions">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <TableView fx:id="TransactionTable" layoutX="17.0" layoutY="49.0" prefHeight="123.0" prefWidth="213.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+               <columns>
+                  <TableColumn fx:id="TransactionProductColumn" prefWidth="79.0" text="Product" />
+                  <TableColumn fx:id="TransactionTypeColumn" prefWidth="73.0" text="Type" />
+                  <TableColumn fx:id="TransactionAmountColumn" prefWidth="60.0" text="Amount" />
+               </columns>
+            </TableView>
+         </children>
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
       </Pane>
     </children>
   </GridPane>
