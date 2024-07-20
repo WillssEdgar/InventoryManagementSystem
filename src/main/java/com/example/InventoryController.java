@@ -68,6 +68,8 @@ public class InventoryController {
   private TextField RemoveProductName;
   @FXML
   private TextField RemoveProductQuantity;
+  @FXML
+  private TextField RemoveCategoryTextField;
 
   @FXML
   public void initialize() {
@@ -149,6 +151,7 @@ public class InventoryController {
 
   @FXML
   public void fillProductTable() throws SQLException {
+    fillCategoryName();
     Category category = Table.getSelectionModel().getSelectedItem();
     if (category == null)
       return;
@@ -210,6 +213,15 @@ public class InventoryController {
     Product product = Table2.getSelectionModel().getSelectedItem();
     if (product != null) {
       RemoveProductName.setText(product.getName());
+    }
+
+  }
+
+  @FXML
+  public void fillCategoryName() {
+    Category category = Table.getSelectionModel().getSelectedItem();
+    if (category != null) {
+      RemoveCategoryTextField.setText(category.getName());
     }
 
   }
