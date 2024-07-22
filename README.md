@@ -55,8 +55,7 @@ as a Maven project and run the `Main` class directly
 
 - `src/main/java`: Contains Java source code files.
   - `com.example.controller`: Controllers for handling user interactions.
-  - `com.example.model`: Data model classes for inventory, user, and suppliers.
-  - `com.example.service`: Services for business logic and database interactions.
+  - `com.example.models`: Data model classes for inventory, user, and suppliers.
   - `com.example`: Main application entry point.
 - `src/main/resources`: Contains FXML files, CSS stylesheets, and other resources.
 - `pom.xml`: Maven configuartion file that defines project dependencies and build settings.
