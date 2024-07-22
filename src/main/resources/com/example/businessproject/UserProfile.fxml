@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <VBox minHeight="200.0" prefHeight="200.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: #d1d5db; -fx-border-radius: 20;">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="User Profile">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="30.0" />
+                     </VBox.margin>
+                  </Text>
+                  <HBox alignment="CENTER" maxHeight="20.0" minHeight="20.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username: " wrappingWidth="140.0">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Text>
+                        <Label fx:id="CurrentUserProfileLabel" alignment="TOP_RIGHT" text="Label" textAlignment="RIGHT">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="First Name: " wrappingWidth="140.0">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Text>
+                        <Label fx:id="FirstNameLabel" text="Label">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="3.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="21.0" layoutY="63.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name:" wrappingWidth="140.0">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Text>
+                        <Label fx:id="LastNameLabel" text="Label">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="3.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="21.0" layoutY="80.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Company:" wrappingWidth="140.0">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Text>
+                        <Label fx:id="CompanyNameProfileLabel" text="Label">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="3.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</VBox>

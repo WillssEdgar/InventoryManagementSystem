@@ -2,6 +2,7 @@
 package com.example;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,9 +10,10 @@ import com.example.models.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class NavigationController {
@@ -24,8 +26,10 @@ public class NavigationController {
     this.stage = stage;
   }
 
+  Connection connection = GlobalState.getInstance().getConnection();
+
   @FXML
-  private StackPane mainContent;
+  private VBox mainContent;
 
   @FXML
   private Label UsernameLabel;
@@ -40,7 +44,10 @@ public class NavigationController {
   private Button InventoryButton;
 
   @FXML
-  private Button SettingsButton;
+  private Button ProfileButton;
+
+  @FXML
+  private Button LogoutButton;
 
   @FXML
   public void initialize() {
@@ -50,7 +57,7 @@ public class NavigationController {
     buttons = new ArrayList<>();
     buttons.add(DashboardButton);
     buttons.add(InventoryButton);
-    buttons.add(SettingsButton);
+    buttons.add(ProfileButton);
     System.out.println(buttons);
 
     // Set initial page and button style
@@ -60,8 +67,43 @@ public class NavigationController {
         .setOnAction(event -> showPage("/com/example/businessproject/Dashboard.fxml", "Dashboard", DashboardButton));
     InventoryButton
         .setOnAction(event -> showPage("/com/example/businessproject/Inventory.fxml", "Inventory", InventoryButton));
-    SettingsButton
-        .setOnAction(event -> showPage("/com/example/businessproject/Settings.fxml", "Settings", SettingsButton));
+    ProfileButton
+        .setOnAction(event -> showPage("/com/example/businessproject/UserProfile.fxml", "Profile", ProfileButton));
+  }
+
+  @FXML
+  public void Logout() throws IOException {
+
+    // Create an FXMLLoader instance
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/businessproject/SignIn.fxml"));
+
+    InitialViewController controller = new InitialViewController(connection, stage);
+
+    // Set the controller on the FXMLLoader
+    loader.setController(controller);
+
+    // Load the FXML file
+    Parent root = loader.load();
+
+    // Create a new Scene with the loaded FXML
+    Scene scene = new Scene(root);
+
+    // Optionally add a stylesheet if needed
+    scene.getStylesheets().add(getClass().getResource("/com/example/businessproject/Navigation.css").toExternalForm());
+    stage.close();
+    // Obtain the current stage
+    Stage primaryStage = (Stage) stage.getScene().getWindow();
+
+    // Set the new scene on the current stage
+    primaryStage.setScene(scene);
+
+    // Optionally set the stage title and size
+    primaryStage.setTitle("Business Storage Manager");
+    primaryStage.setWidth(600);
+    primaryStage.setHeight(600);
+
+    // Show the stage (this is redundant but ensures visibility)
+    primaryStage.show();
   }
 
   public void showPage(String fxmlFile, String controllerType, Button clickedButton) {
@@ -78,13 +120,16 @@ public class NavigationController {
           InventoryController inventoryController = new InventoryController(user, stage);
           loader.setController(inventoryController);
           break;
-        case "Settings":
+        case "Profile":
+          ProfileController profileController = new ProfileController(user, stage);
+          loader.setController(profileController);
           break;
         default:
           break;
       }
 
       Parent page = loader.load();
+      VBox.setVgrow(page, javafx.scene.layout.Priority.ALWAYS);
       mainContent.getChildren().clear();
       mainContent.getChildren().add(page);
 
