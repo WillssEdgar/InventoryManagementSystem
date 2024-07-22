@@ -1,4 +1,4 @@
-package com.example;
+package com.example.controller;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.GlobalState;
 import com.example.models.Category;
 import com.example.models.Product;
 import com.example.models.Transaction;

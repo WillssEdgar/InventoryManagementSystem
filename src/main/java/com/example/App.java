@@ -4,6 +4,7 @@ package com.example;
 import java.io.IOException;
 import java.sql.Connection;
 
+import com.example.controller.InitialViewController;
 import com.example.database.DatabaseConnection;
 
 import javafx.application.Application;
